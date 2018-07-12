@@ -1,0 +1,72 @@
+pragma solidity
+^0.4.24;
+
+contract Computer{
+
+        uint256 public computerId = 0;
+        string public CPUName;
+        string public RAMName;
+        string public MotherBoardName;
+        string public VideoBoardName;
+        
+
+        //Map to save the owner of each token
+        mapping (uint256 => address) public ownerOf; 
+        
+        event Transfer(address from, address to, uint256 tokenId);
+        
+    //Revert all the transaction if not-owner try to do smth
+    function checkTheOwner(uint256 _tokenId) public
+    {
+        require (ownerOf[_tokenId] == msg.sender);
+    }
+    
+        
+    function transfer (address _to, uint256 _tokenId) public
+    {
+        checkTheOwner(_tokenId);
+        ownerOf[_tokenId] = _to;
+        emit Transfer (msg.sender, _to, _tokenId);
+    
+    }
+    
+
+    
+    //We increase the ID and bind new token with the owner
+   function createComputer(string _CPUName, string _RAMName, string _MotherBoardName, string _VideoBoardName) public 
+    {
+        ownerOf[++computerId] = msg.sender;
+        CPUName = _CPUName;
+        RAMName = _RAMName;
+        MotherBoardName = _MotherBoardName;
+        VideoBoardName  = _VideoBoardName;
+        
+    }
+    
+    
+    //Functions change simple parameters
+    function CPUChange(string _NewCPUName, uint256 _tokenId) public
+    {
+        checkTheOwner(_tokenId);
+        CPUName = _NewCPUName;
+    }
+    
+    function RAMChange(string _NewRAMName, uint256 _tokenId) public
+    {
+        checkTheOwner(_tokenId);
+        RAMName = _NewRAMName;
+    }
+    
+    function MotherBoardChange(string _NewMotherBoardName, uint256 _tokenId) public
+    {
+        checkTheOwner(_tokenId);
+        MotherBoardName = _NewMotherBoardName;
+    }
+    
+    function VideoBoardChange(string _NewVideoBoardName, uint256 _tokenId) public
+    {
+        checkTheOwner(_tokenId);
+        VideoBoardName = _NewVideoBoardName;
+    }
+
+}
