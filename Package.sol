@@ -1,5 +1,4 @@
-pragma solidity
-^0.4.24;
+pragma solidity ^0.4.24;
 
 contract OtherContract {
     function onERC721Received(address, address, uint256) public;
@@ -36,7 +35,7 @@ contract Package {
     address postOfficeAddress;
     address devoloper;
 
-    function Package() public {
+    constructor() public {
         devoloper = msg.sender;
         postOfficeAddress = devoloper;
     }
@@ -85,7 +84,7 @@ contract Package {
         elements[_tokenId].meta.status = _status;
     }
 
-    function isContract(address addr) internal returns (bool) {
+    function isContract(address addr) internal view returns (bool) {
         uint size;
         assembly { size := extcodesize(addr) }
         return size > 0;
